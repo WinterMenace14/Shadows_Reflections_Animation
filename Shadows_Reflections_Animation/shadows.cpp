@@ -1,3 +1,4 @@
+//Erik Isaacson, Jacob Janas
 #include "core.h"
 
 //Flag variables
