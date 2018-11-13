@@ -12,10 +12,10 @@ GLfloat tknots[U_NUMKNOTS] = { 0., 0., 0., 0., 1., 1., 1., 1. };
 
 // Control points for the flag. The Z values are modified to make it wave
 GLfloat ctlpoints[V_NUMPOINTS][U_NUMPOINTS][3] = {
-	{ { 0., 30., 0. },{ 10., 30., 0. },{ 20., 30., 0 },{ 30., 30., 0. } }, //30
+	{ { 0., 40., 0. },{ 10., 40., 0. },{ 20., 40., 0 },{ 30., 40., 0. } }, //30
+	{ { 0., 30., 0. },{ 10., 30., 0. },{ 20., 30., 0 },{ 30., 30., 0. } },
 	{ { 0., 20., 0. },{ 10., 20., 0. },{ 20., 20., 0 },{ 30., 20., 0. } },
-	{ { 0., 10., 0. },{ 10., 10., 0. },{ 20., 10., 0 },{ 30., 10., 0. } },
-	{ { 0., 0., 0. },{ 10., 0., 0. },{ 20., 0., 0 },{ 30., 0., 0. } }
+	{ { 0., 10., 0. },{ 10., 10., 0. },{ 20., 10., 0 },{ 30., 10., 0. } }
 };
 
 GLUnurbsObj *nurbsflag;
@@ -113,22 +113,27 @@ void init() {
 	mesh2 = createCube();
 	mesh3 = createCube();
 	mesh4 = createCube();
+	mesh5 = createPole();
 	calculateNormalPerFace(mesh1);
 	calculateNormalPerFace(mesh2);
 	calculateNormalPerFace(mesh3);
 	calculateNormalPerFace(mesh4);
+	calculateNormalPerFace(mesh5);
 	calculateNormalPerVertex(mesh1);
 	calculateNormalPerVertex(mesh2);
 	calculateNormalPerVertex(mesh3);
 	calculateNormalPerVertex(mesh4);
+	calculateNormalPerVertex(mesh5);
 
 	// textures
 	loadBMP_custom(textureArray, "./BMP_Files/brick.bmp", 0);
 	loadBMP_custom(textureArray, "./BMP_Files/oldbox.bmp", 1);
+	loadBMP_custom(textureArray, "./BMP_Files/metal.bmp", 2);
 	display1 = meshToDisplayList(mesh1, 1, 0);
 	display2 = meshToDisplayList(mesh2, 2, 1);
 	display3 = meshToDisplayList(mesh3, 3, 1);
 	display4 = meshToDisplayList(mesh4, 4, 1);
+	display5 = meshToDisplayList(mesh5, 5, 2);
 
 	// floor vertex
 	dot_vertex_floor.push_back(Vec3<GLfloat>(-2000.0, 0.0, 2000.0));
@@ -261,6 +266,17 @@ void display(void) {
 	glCallList(display4);
 	glPopMatrix();
 
+	glPushMatrix();
+	glTranslatef(-10, 0, 0);
+	glScalef(1.0, -1.0, 1.0);
+	glCallList(display5);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(1.0, -1.0, 1.0);
+	draw_nurb();
+	glPopMatrix();
+
 	// STENCIL-STEP 4. disable it
 	glDisable(GL_STENCIL_TEST);
 	/************************************************************/
@@ -320,6 +336,10 @@ void display(void) {
 		glCallList(display3);
 		glTranslatef(-400, 0, 0);
 		glCallList(display4);
+		glTranslatef(190, 0, 0);
+		glCallList(display5);
+		glTranslatef(10, 0, 0);
+		draw_nurb();
 		glEnable(GL_DEPTH_TEST);
 		glPopMatrix();
 		glDisable(GL_BLEND);
@@ -342,6 +362,11 @@ void display(void) {
 	glPushMatrix();
 	glTranslatef(-200, 0, 0);
 	glCallList(display4);
+	glPopMatrix();
+	//pole
+	glPushMatrix();
+	glTranslatef(-10, 0, 0);
+	glCallList(display5);
 	glPopMatrix();
 
 	//drawFlag

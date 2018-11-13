@@ -32,13 +32,14 @@ struct Mesh {
 int width = 1200;
 int height = 600;
 float ratio = 1.0;
-GLuint display1, display2, display3, display4;
+GLuint display1, display2, display3, display4, display5;
 
 // meshes
 Mesh* mesh1;
 Mesh* mesh2;
 Mesh* mesh3;
 Mesh* mesh4;
+Mesh* mesh5;
 
 // controling parameters
 int mouse_button;
@@ -125,6 +126,83 @@ Mesh* createCube() {
 	int BOX_WIDTH = 100;
 	int BOX_HEIGHT = 100;
 	int BOX_DEPTH = 100;
+
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(0.0, BOX_HEIGHT, BOX_DEPTH));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(BOX_WIDTH, BOX_HEIGHT, BOX_DEPTH));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(BOX_WIDTH, 0.0, BOX_DEPTH));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(0.0, 0.0, BOX_DEPTH));
+
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(0.0, BOX_HEIGHT, 0.0));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(BOX_WIDTH, BOX_HEIGHT, 0.0));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(BOX_WIDTH, 0.0, 0.0));
+	mesh->dot_vertex.push_back(Vec3<GLfloat>(0.0, 0.0, 0.0));
+
+	// face 1
+	mesh->face_index_vertex.push_back(0);//0
+	mesh->face_index_vertex.push_back(2);//1
+	mesh->face_index_vertex.push_back(1);//2
+	mesh->face_index_vertex.push_back(0);//0
+	mesh->face_index_vertex.push_back(3);//2
+	mesh->face_index_vertex.push_back(2);//3
+										 // face 2
+	mesh->face_index_vertex.push_back(0);//0
+	mesh->face_index_vertex.push_back(5);//1
+	mesh->face_index_vertex.push_back(4);//5
+	mesh->face_index_vertex.push_back(0);//0
+	mesh->face_index_vertex.push_back(1);//5
+	mesh->face_index_vertex.push_back(5);//4
+										 // face 3
+	mesh->face_index_vertex.push_back(1);//1
+	mesh->face_index_vertex.push_back(6);//2
+	mesh->face_index_vertex.push_back(5);//6
+	mesh->face_index_vertex.push_back(1);//1
+	mesh->face_index_vertex.push_back(2);//6
+	mesh->face_index_vertex.push_back(6);//5
+										 // face 4
+	mesh->face_index_vertex.push_back(2);//2
+	mesh->face_index_vertex.push_back(7);//3
+	mesh->face_index_vertex.push_back(6);//7
+	mesh->face_index_vertex.push_back(2);//2
+	mesh->face_index_vertex.push_back(3);//7
+	mesh->face_index_vertex.push_back(7);//6
+										 // face 5
+	mesh->face_index_vertex.push_back(4);//0
+	mesh->face_index_vertex.push_back(3);//3
+	mesh->face_index_vertex.push_back(0);//7
+	mesh->face_index_vertex.push_back(4);//0
+	mesh->face_index_vertex.push_back(7);//7
+	mesh->face_index_vertex.push_back(3);//4
+										 // face 6
+	mesh->face_index_vertex.push_back(5);//4 
+	mesh->face_index_vertex.push_back(7);//5
+	mesh->face_index_vertex.push_back(4);//6
+	mesh->face_index_vertex.push_back(5);//4
+	mesh->face_index_vertex.push_back(6);//6
+	mesh->face_index_vertex.push_back(7);//7
+
+										 // texture
+	mesh->dot_texture.push_back(Vec2<GLfloat>(0.0, 1.0));
+	mesh->dot_texture.push_back(Vec2<GLfloat>(1.0, 1.0));
+	mesh->dot_texture.push_back(Vec2<GLfloat>(1.0, 0.0));
+	mesh->dot_texture.push_back(Vec2<GLfloat>(0.0, 0.0));
+	for (int t = 0; t < 6; t++) {
+		mesh->face_index_texture.push_back(0);//0
+		mesh->face_index_texture.push_back(2);//1
+		mesh->face_index_texture.push_back(1);//2
+		mesh->face_index_texture.push_back(0);//0
+		mesh->face_index_texture.push_back(3);//2
+		mesh->face_index_texture.push_back(2);//3
+	}
+
+	return mesh;
+}
+
+Mesh* createPole() {
+	Mesh *mesh = new Mesh;
+	// Vertexes
+	int BOX_WIDTH = 10;
+	int BOX_HEIGHT = 130;
+	int BOX_DEPTH = 10;
 
 	mesh->dot_vertex.push_back(Vec3<GLfloat>(0.0, BOX_HEIGHT, BOX_DEPTH));
 	mesh->dot_vertex.push_back(Vec3<GLfloat>(BOX_WIDTH, BOX_HEIGHT, BOX_DEPTH));
